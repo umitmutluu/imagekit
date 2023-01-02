@@ -1,0 +1,10 @@
+name: imagekit
+description: Imagekit package for uploading
+version: 0.0.1
+homepage: https://github.com/nstack-in/imagekit.git
+
+environment:
+  sdk: ">=2.18.5 <3.0.0"
+
+dependencies:
+  http: ^0.13.5
