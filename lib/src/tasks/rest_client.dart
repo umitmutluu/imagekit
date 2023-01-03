@@ -25,25 +25,24 @@ class RestClient {
 
   Future<ImageKitResponse> upload(
     File file, {
+    required AuthEndpointRespose auth,
     List<String> tags = const [],
     Map<String, dynamic> customMetadata = const {},
-    AuthEndpointRespose? auth,
+    Map<String, String> headers = const {},
   }) async {
     final config = imageKit.config;
     if (config == null) {
       throw "SDK Initilization failed, Please setup Config!";
     }
-    final authenticationEndpoint = config.authenticationEndpoint;
-    final authResponse = auth ?? await _getAuthResponse(authenticationEndpoint);
-    final response = await getHttpResepose(
+    final response = await _getHttpResepose(
       file,
-      authResponse,
+      auth,
       customMetadata,
       tags,
       config,
     );
     final statusCode = response.statusCode;
-    final data = await readResponseAsString(response);
+    final data = await _readResponseAsString(response);
     if (statusCode ~/ 100 != 2) {
       throw Exception(data);
     } else {
@@ -52,7 +51,7 @@ class RestClient {
     }
   }
 
-  Future<HttpClientResponse> getHttpResepose(
+  Future<HttpClientResponse> _getHttpResepose(
     File file,
     AuthEndpointRespose authResponse,
     Map<String, dynamic> customMetadata,
@@ -97,7 +96,9 @@ class RestClient {
     return httpResponse;
   }
 
-  Future<String> readResponseAsString(HttpClientResponse response) {
+  Future<String> _readResponseAsString(
+    HttpClientResponse response,
+  ) {
     final completer = Completer<String>();
     final contents = StringBuffer();
     response.transform(utf8.decoder).listen(
@@ -108,8 +109,14 @@ class RestClient {
     return completer.future;
   }
 
-  Future<AuthEndpointRespose> _getAuthResponse(String endpoint) async {
-    final response = await http.get(Uri.parse(endpoint));
+  Future<AuthEndpointRespose> fetchAuthToken(
+    String endpoint, {
+    Map<String, String> headers = const {},
+  }) async {
+    final response = await http.get(
+      Uri.parse(endpoint),
+      headers: headers,
+    );
     if (response.statusCode != 200) {
       throw "Authentication Failed";
     }
@@ -121,9 +128,7 @@ class RestClient {
     final key = keys.firstWhere(
       (key) {
         final data = body[key];
-        if (data is Map) {
-          expectedKey.every((element) => data[element] != null);
-        }
+        if (data is Map) expectedKey.every((element) => data[element] != null);
         return false;
       },
       orElse: () => '',
