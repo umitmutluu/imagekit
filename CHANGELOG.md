@@ -9,3 +9,7 @@
 ## 0.0.3
 
 - Rest Client initialization issue fix
+
+## 0.0.4
+
+- Fixed auto detect token logic

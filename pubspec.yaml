@@ -1,6 +1,6 @@
 name: imagekit
 description: Imagekit package for uploading
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/nstack-in/imagekit.git
 homepage: https://www.nstack.in/
 
