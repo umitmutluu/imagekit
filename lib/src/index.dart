@@ -92,6 +92,7 @@ class ImageKit {
       throw "SDK Initilization failed, Auth Endpoint is missing";
     }
     final authEndpoint = config.authenticationEndpoint;
+    _restClient ??= RestClient(this);
     return _restClient!.fetchAuthToken(
       authEndpoint,
       headers: {
