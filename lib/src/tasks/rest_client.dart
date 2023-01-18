@@ -128,7 +128,9 @@ class RestClient {
     final key = keys.firstWhere(
       (key) {
         final data = body[key];
-        if (data is Map) expectedKey.every((element) => data[element] != null);
+        if (data is Map) {
+          return expectedKey.every((element) => data[element] != null);
+        }
         return false;
       },
       orElse: () => '',
