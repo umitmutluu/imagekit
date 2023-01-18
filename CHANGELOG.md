@@ -5,3 +5,7 @@
 ## 0.0.2
 
 - Added Functionality to support breaer token as well as custom header for auth server
+
+## 0.0.3
+
+- Rest Client initialization issue fix
