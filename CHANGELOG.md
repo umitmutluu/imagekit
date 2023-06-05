@@ -13,3 +13,7 @@
 ## 0.0.4
 
 - Fixed auto detect token logic
+
+## 0.0.5
+
+- Added filename support

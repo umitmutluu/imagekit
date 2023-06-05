@@ -29,6 +29,7 @@ class RestClient {
     List<String> tags = const [],
     Map<String, dynamic> customMetadata = const {},
     Map<String, String> headers = const {},
+    required String fileName,
   }) async {
     final config = imageKit.config;
     if (config == null) {
@@ -40,6 +41,7 @@ class RestClient {
       customMetadata,
       tags,
       config,
+      fileName,
     );
     final statusCode = response.statusCode;
     final data = await _readResponseAsString(response);
@@ -57,10 +59,9 @@ class RestClient {
     Map<String, dynamic> customMetadata,
     List<String> tags,
     Configuration config,
+    String fileName,
   ) async {
     final httpClient = _getHttpClient();
-
-    String fileName = file.path.split('/').last;
     final request = await httpClient.postUrl(Uri.parse(uploadBaseUrl));
 
     // Prepare Multipart

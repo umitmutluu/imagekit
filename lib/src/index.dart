@@ -48,6 +48,7 @@ class ImageKit {
     Map<String, String> headers = const {},
     String? bearerToken,
     AuthEndpointRespose? auth,
+    String? fileName,
   }) async {
     final auth = await getToken(
       bearerToken: bearerToken,
@@ -58,6 +59,7 @@ class ImageKit {
       tags: tags,
       auth: auth,
       customMetadata: customMetadata,
+      fileName: fileName,
     );
   }
 
@@ -68,17 +70,20 @@ class ImageKit {
     required AuthEndpointRespose auth,
     List<String> tags = const [],
     Map<String, dynamic> customMetadata = const {},
+    String? fileName,
   }) async {
     final config = this.config;
     if (config == null) {
       throw "SDK Initilization failed, Public key is required to upload!";
     }
     _restClient ??= RestClient(this);
+    final name = file.path.split('/').last;
     return _restClient!.upload(
       file,
       auth: auth,
       tags: tags,
       customMetadata: customMetadata,
+      fileName: fileName ?? name,
     );
   }
 
