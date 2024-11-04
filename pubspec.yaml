@@ -5,7 +5,7 @@ repository: https://github.com/nstack-in/imagekit.git
 homepage: https://www.nstack.in/
 
 environment:
-  sdk: ">=2.18.5 <3.0.0"
+  sdk: '>=3.4.1 <4.0.0'
 
 dependencies:
-  http: ^0.13.5
+  http: ^1.2.2
